@@ -106,6 +106,7 @@
             },
             //获取短信验证码
             async getVerifyCode(){
+                console.log('test git push branch')
                 if (this.rightPhoneNumber) {
                     this.computedTime = 30;
                     this.timer = setInterval(() => {
