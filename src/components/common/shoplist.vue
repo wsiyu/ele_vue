@@ -142,7 +142,7 @@ export default {
 				this.touchend = true;
 				return
 			}
-			this.isLoading = false
+		
 			//当获取数据小于20，说明没有更多数据，不需要再次请求数据
 			this.preventRepeatReuqest = false;
 		},
