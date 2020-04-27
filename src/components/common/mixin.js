@@ -5,45 +5,47 @@ export const loadMore = {
 	directives: {
 		'load-more': {
 			bind: (el, binding) => {
-				let windowHeight = window.screen.height;
-				let height;
-				let setTop;
-				let paddingBottom;
-				let marginBottom;
-				let requestFram;
-				let oldScrollTop;
+			//	let windowHeight = window.screen.height;
+			//	let height;
+			//	let setTop;
+			//	let paddingBottom;
+			//	let marginBottom;
+			//	let requestFram;
+			//	let oldScrollTop;
 				let scrollEl;
 				let heightEl;
 				let scrollType = el.attributes.type && el.attributes.type.value;
-				let scrollReduce = 2;
+			//	let scrollReduce = 2;
 				if (scrollType == 2) {
 					scrollEl = el;
 					heightEl = el.children[0];
 				} else {
-					scrollEl = document.body;
+					//scrollEl = document.body;
+					scrollEl = document.documentElement
 					heightEl = el;
 				}
-
 				el.addEventListener('touchstart', () => {
-					height = heightEl.clientHeight;
+				/*	height = heightEl.clientHeight;
 					if (scrollType == 2) {
 						height = height
 					}
 					setTop = el.offsetTop;
 					paddingBottom = getStyle(el, 'paddingBottom');
-					marginBottom = getStyle(el, 'marginBottom');
+					marginBottom = getStyle(el, 'marginBottom');  */
 				}, false)
 
 				el.addEventListener('touchmove', () => {
+				//	console.log('scrollTop: ', scrollEl.scrollTop)
 					loadMore();
 				}, false)
 
 				el.addEventListener('touchend', () => {
-					oldScrollTop = scrollEl.scrollTop;
-					moveEnd();
+					loadMore()
+			//		oldScrollTop = scrollEl.scrollTop;
+			//		moveEnd();
 				}, false)
 
-				const moveEnd = () => {
+			/*	const moveEnd = () => {
 					requestFram = requestAnimationFrame(() => {
 						if (scrollEl.scrollTop != oldScrollTop) {
 							oldScrollTop = scrollEl.scrollTop;
@@ -54,12 +56,12 @@ export const loadMore = {
 							loadMore();
 						}
 					})
-				}
-
+				} */
 				const loadMore = () => {
-					if (scrollEl.scrollTop + windowHeight >= height + setTop + paddingBottom + marginBottom - scrollReduce) {
+					if (scrollEl.scrollTop + scrollEl.clientHeight >= scrollEl.scrollHeight) {
 						binding.value();
-					}
+					}  
+					
 				}
 			}
 		}

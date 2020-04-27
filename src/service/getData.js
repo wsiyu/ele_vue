@@ -68,7 +68,7 @@ export const msiteFoodTypes = geohash => fetch('/v2/index_entry', {
  * 获取msite商铺列表
  */
 
-export const shopList = (latitude, longitude, offset, restaurant_category_id = '', restaurant_category_ids = '', order_by = '', delivery_mode = '', support_ids = []) => {
+export const shopList = (latitude, longitude, offset, restaurant_category_id = '', restaurant_category_ids = '', order_by = '4', delivery_mode = '', support_ids = []) => {
 	let supportStr = '';
 	support_ids.forEach(item => {
 		if (item.status) {
@@ -80,12 +80,12 @@ export const shopList = (latitude, longitude, offset, restaurant_category_id = '
 		longitude,
 		offset,
 		limit: '20',
-		'extras[]': 'activities',
-		keyword: '',
+	//	'extras[]': 'activities',
+	//	keyword: '',
 		restaurant_category_id,
-		'restaurant_category_ids[]': restaurant_category_ids,
+	//	'restaurant_category_ids[]': restaurant_category_ids,
 		order_by,
-		'delivery_mode[]': delivery_mode + supportStr
+	//	'delivery_mode[]': delivery_mode + supportStr
 	};
 	return fetch('/shopping/restaurants', data);
 };

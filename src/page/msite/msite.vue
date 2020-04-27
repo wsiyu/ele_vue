@@ -7,9 +7,7 @@
 	    			<line x1="14" y1="14" x2="20" y2="20" style="stroke:rgb(255,255,255);stroke-width:2"/>
 	    		</svg>
     		</router-link>
-			<router-link to="/home" slot="msite-title" class="msite_title">
-				<span class="title_text ellipsis">{{msiteTitle}}</span>
-			</router-link>
+			<span class="title_text ellipsis msite_title" slot="msite-title">{{msiteTitle}}</span>
     	</head-top>
     	<nav class="msite_nav">
     		<div class="swiper-container" v-if="foodTypes.length">
@@ -24,6 +22,7 @@
 		            </div>
 		        </div>
 		        <div class="swiper-pagination"></div>
+
 		    </div>
 		    <img src="../../images/fl.svg" class="fl_back animation_opactiy" v-else>
     	</nav>
@@ -59,8 +58,9 @@ export default {
             hasGetData: false, //是否已经获取地理位置数据，成功之后再获取商铺列表信息
             imgBaseUrl: 'https://fuss10.elemecdn.com', //图片域名地址
         }
-    },
-    async beforeMount(){
+	},
+	//根据city中/msite传入的参数获取位置信息，并将其传入vuex
+    async beforeMount(){  
 		if (!this.$route.query.geohash) {
 			const address = await cityGuess();
 			this.geohash = address.latitude + ',' + address.longitude;
@@ -86,12 +86,12 @@ export default {
     		for (let i = 0, j = 0; i < resLength; i += 8, j++) {
     			foodArr[j] = resArr.splice(0, 8);
     		}
-    		this.foodTypes = foodArr;
+			this.foodTypes = foodArr;
         }).then(() => {
         	//初始化swiper
         	new Swiper('.swiper-container', {
 		        pagination: '.swiper-pagination',
-		        loop: true
+				loop: true,
 		    });
         })
     },
@@ -109,7 +109,8 @@ export default {
     	]),
     	// 解码url地址，求去restaurant_category_id值
     	getCategoryId(url){
-    		let urlData = decodeURIComponent(url.split('=')[1].replace('&target_name',''));
+			
+			let urlData = decodeURIComponent(url.split('=')[1].replace('&target_name',''));
     		if (/restaurant_category_id/gi.test(urlData)) {
     			return JSON.parse(urlData).restaurant_category_id.id
     		}else{
@@ -125,7 +126,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import 'src/style/mixin';
+	@import 'src/style/mixin';
+	
 	.link_search{
 		left: .8rem;
 		@include wh(.9rem, .9rem);
